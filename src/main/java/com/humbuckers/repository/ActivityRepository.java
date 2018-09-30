@@ -26,4 +26,12 @@ public interface ActivityRepository extends JpaRepository<Activities, Long>, Jpa
 
 	@Query(value = "select act from Activities act where act.activityType =:type ")
 	public List<Activities> findAllByType(@Param("type")String type);
+	
+	
+	@Query(value = "select * from ACTIVITIES where ACTIVITY_PARENT_ID =:key ",nativeQuery=true)
+	public List<Activities> findByParentKey(@Param("key")Long key);
+	
+	
+	
+	
 }
