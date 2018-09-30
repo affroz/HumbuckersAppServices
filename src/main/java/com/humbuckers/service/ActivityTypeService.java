@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.humbuckers.entity.ActivitySubType;
 import com.humbuckers.entity.ActivityType;
 import com.humbuckers.repository.ActivityTypeRepository;
 

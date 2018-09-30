@@ -10,9 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.humbuckers.entity.ActivitySubType;
 import com.humbuckers.entity.ActivityType;
-import com.humbuckers.entity.Project;
 import com.humbuckers.entity.Users;
 
 
