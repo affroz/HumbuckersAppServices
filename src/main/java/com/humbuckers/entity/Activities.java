@@ -5,13 +5,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,14 +29,16 @@ public class Activities {
 	@Column(name="ACTIVITY_TYPE")
 	private String activityType;
 			
+	@Transient
+	private List<Activities> activityChildList;
 	/*@ManyToOne(optional = true)
 	@JoinColumn(name="ACTIVITY_PARENT_ID",updatable = false,insertable = false)
 	private Activities activityParentId;
 	*/
-	
-	@OneToMany(fetch=FetchType.LAZY)
+		
+	/*@OneToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "ACTIVITIES", joinColumns = { @JoinColumn(name = "ACTIVITY_PARENT_ID") }, inverseJoinColumns = { @JoinColumn(name = "ACTIVITY_ID") })
-	private List<Activities> activityChildList;
+	private List<Activities> activityChildList;*/
 	
 }
 
