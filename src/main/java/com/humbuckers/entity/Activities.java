@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -17,8 +20,9 @@ import lombok.Setter;
 @Table(name="ACTIVITIES")
 public class Activities {
 	
-	
 	@Id
+	@SequenceGenerator(name="seq", sequenceName="activities_activity_id_seq",allocationSize=50)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
 	@Column(name = "ACTIVITY_ID")
 	private Long activityId;
 	
@@ -31,6 +35,10 @@ public class Activities {
 			
 	@Transient
 	private List<Activities> activityChildList;
+	
+	@Column(name="ACTIVITY_PARENT_ID")
+	private Long activityParentId;
+	
 	/*@ManyToOne(optional = true)
 	@JoinColumn(name="ACTIVITY_PARENT_ID",updatable = false,insertable = false)
 	private Activities activityParentId;

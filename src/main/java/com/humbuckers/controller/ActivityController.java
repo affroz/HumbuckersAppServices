@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.humbuckers.entity.Activities;
@@ -33,5 +35,16 @@ public class ActivityController {
 	}
 	
 	
+	@RequestMapping(value = "/updateActivity", method = RequestMethod.POST)
+	public Activities createEmployee(@RequestBody Activities act)
+	{
+		Activities updateact=activityService.save(act);
+	    return updateact;
+	}
+	
+	@GetMapping(path = {"/generateActivityKey"})
+	public Long generateActivityKey(){
+		return activityService.generateActivityKey();
+	}
 	
 }

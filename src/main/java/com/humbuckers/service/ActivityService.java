@@ -56,6 +56,11 @@ private ActivityRepository repository;
 		return child;
 	}
 	
+	
+	public Long generateActivityKey() {
+		return repository.generateActivityKey();
+	}
+	
 }
 
 

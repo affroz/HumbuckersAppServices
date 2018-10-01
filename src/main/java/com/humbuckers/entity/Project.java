@@ -6,7 +6,9 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -18,11 +20,13 @@ import lombok.Setter;
 @Table(name="PROJECTS")
 public class Project {
 	
-	@org.hibernate.annotations.GenericGenerator(name = "incrementGenerator", strategy = "org.hibernate.id.IncrementGenerator")
-	@GeneratedValue(generator="incrementGenerator")
+	
+	
 	@Id
+	@SequenceGenerator(name="seq", sequenceName="projects_project_id_seq",allocationSize=50)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
 	@Column(name = "project_id")
-	private Long activityMainId;
+	private Long projectId;
 	
 	@Column(name="project_name")
 	private String projectName;

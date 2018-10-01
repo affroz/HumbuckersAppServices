@@ -21,6 +21,9 @@ import com.humbuckers.entity.Users;
  */
 public interface ActivityRepository extends JpaRepository<Activities, Long>, JpaSpecificationExecutor<Users> {
 
+	
+
+
 	@Query(value = "select act from Activities act where act.activityName =:name")
 	public Activities findByActivityName(@Param("name")String name);
 
@@ -31,7 +34,8 @@ public interface ActivityRepository extends JpaRepository<Activities, Long>, Jpa
 	@Query(value = "select * from ACTIVITIES where ACTIVITY_PARENT_ID =:key ",nativeQuery=true)
 	public List<Activities> findByParentKey(@Param("key")Long key);
 	
-	
+	@Query(value = "select max(ACTIVITY_ID)+1 from ACTIVITIES",nativeQuery=true)
+	public Long generateActivityKey();
 	
 	
 }
