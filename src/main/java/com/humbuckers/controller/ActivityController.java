@@ -24,9 +24,9 @@ public class ActivityController {
 	private ActivityService activityService;
 	
 	
-	@GetMapping(path = {"/fetchactivity/{activity}"})
-	public Activities fetchActivity(@PathVariable("activity") String name){
-		return activityService.findByActivityName(name);
+	@GetMapping(path = {"/fetchactivity/{key}"})
+	public Activities fetchActivity(@PathVariable("key") Long key){
+		return activityService.findById(key);
 	}
 	
 	@GetMapping(path = {"/fetchAllActivity"})

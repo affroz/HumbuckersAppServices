@@ -23,6 +23,10 @@ public class ProjectActivitiesService extends GenericService<ProjectActivities, 
 	public List<ProjectActivities> findAll(){
 		return projectActivitiesRepository.findAll();
 	}
+
+	public List<ProjectActivities> findByProjectId(Long projectid) {
+		return projectActivitiesRepository.findByProjectId(projectid);
+	}
 	
 	
 }
