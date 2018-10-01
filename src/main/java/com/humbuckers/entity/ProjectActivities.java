@@ -1,6 +1,8 @@
 package com.humbuckers.entity;
 
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -34,13 +35,24 @@ public class ProjectActivities {
 	@JoinColumn(name="ACTIVITY_KEY")
 	private Activities activities;
 	
-
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="PROJECT_KEY")
 	private Project project;
 	
+	@Column(name="activity_planned_start_date")
+	private Date activityPlannedStartDate;
 	
+	@Column(name="activity_planned_end_date")
+	private Date activityPlannedEndDate;
 	
+	@Column(name="activity_actual_start_date")
+	private Date activityAcutalStartDate;
+	
+	@Column(name="activity_actual_end_date")
+	private Date activityActualEndDate;
+	
+	@Column(name="REMARK")
+	private String remark;
 }
 
 

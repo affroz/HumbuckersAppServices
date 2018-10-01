@@ -42,13 +42,14 @@ public class ProjectController {
 	
 	
 	@RequestMapping(value = "/saveProjectActivitiesList", method = RequestMethod.POST)
-	public void saveProjectActivities(@RequestBody List<ProjectActivities> projectActivitiesList)
+	public String saveProjectActivities(@RequestBody List<ProjectActivities> projectActivitiesList)
 	{
 		if(projectActivitiesList!=null && projectActivitiesList.size()>0) {
 			for (ProjectActivities projectActivities : projectActivitiesList) {
 				projectActivitiesService.save(projectActivities);
 			}
 		}
+		return "";
 		
 		
 	}
