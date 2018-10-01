@@ -5,12 +5,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -31,13 +28,11 @@ public class ProjectActivities {
 	@Column(name = "PROJECT_ACTIVITY_ID")
 	private Long projectActivityId;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ACTIVITY_KEY")
-	private Activities activities;
+	@Column(name="ACTIVITY_KEY")
+	private Long activityKey;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="PROJECT_KEY")
-	private Project project;
+	@Column(name="PROJECT_KEY")
+	private Long projectKey;
 	
 	@Column(name="activity_planned_start_date")
 	private Date activityPlannedStartDate;
