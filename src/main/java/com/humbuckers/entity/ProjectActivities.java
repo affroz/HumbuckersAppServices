@@ -48,6 +48,14 @@ public class ProjectActivities {
 	
 	@Column(name="REMARK")
 	private String remark;
+	
+	
+	@Column(name="PARENT_ACTIVTY_KEY")
+	private Long parentActvityKey;
+	
+	
+	@Column(name="ACTIVTY_TYPE_CODE")
+	private Long activityTypeCode;
 }
 
 
