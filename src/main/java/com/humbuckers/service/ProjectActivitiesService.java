@@ -1,6 +1,7 @@
 package com.humbuckers.service;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,23 @@ public class ProjectActivitiesService extends GenericService<ProjectActivities, 
 
 	public boolean checkexist(Long activityKey, Long projectKey) {
 		return projectActivitiesRepository.checkexist(activityKey,projectKey) >0 ? true:false;
+	}
+
+	public void updateDates(Long projectKey, Long activityKey) {
+		Date plannedStartDate=projectActivitiesRepository.getPlannedStartDate(projectKey,activityKey);
+		Date plannedEndDate=projectActivitiesRepository.getPlannedEndDate(projectKey,activityKey);
+		Date actualStartDate=projectActivitiesRepository.getActualStartDate(projectKey,activityKey);
+		Date actualEndDate=projectActivitiesRepository.getActualEndDate(projectKey,activityKey);
+		
+		
+		ProjectActivities act=projectActivitiesRepository.findParentActivity(projectKey,activityKey);
+		act.setActivityPlannedStartDate(plannedStartDate);
+		act.setActivityPlannedEndDate(plannedEndDate);
+		act.setActivityAcutalStartDate(actualStartDate);
+		act.setActivityActualEndDate(actualEndDate);
+		projectActivitiesRepository.save(act);
+		
+		
 	}
 	
 	

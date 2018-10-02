@@ -52,6 +52,13 @@ public class ProjectController {
 				projectActivitiesService.save(projectActivities);
 			}
 		}
+		if(projectActivitiesList!=null && projectActivitiesList.size()>0) {
+			for (ProjectActivities projectActivities : projectActivitiesList) {
+				if(projectActivities.getActivityTypeCode()!=2) {
+					projectActivitiesService.updateDates(projectActivities.getProjectKey(),projectActivities.getActivityKey());
+				}
+			}
+		}
 		return "";
 		
 		
