@@ -47,6 +47,8 @@ public class ProjectController {
 	{
 		if(projectActivitiesList!=null && projectActivitiesList.size()>0) {
 			for (ProjectActivities projectActivities : projectActivitiesList) {
+				boolean exist=projectActivitiesService.checkexist(projectActivities.getActivityKey(),projectActivities.getProjectKey());
+				if(!exist)
 				projectActivitiesService.save(projectActivities);
 			}
 		}
@@ -81,5 +83,21 @@ public class ProjectController {
 		}
 		
 	    return "";
+	}
+	
+	
+	@GetMapping(value = "/fetchMainActivitiesByProject/{projectid}")
+	public List<ProjectActivities> fetchMainActivitiesByProject(@PathVariable Long projectid)
+	{
+		List<ProjectActivities> list=projectActivitiesService.fetchMainActivitiesByProject(projectid);
+	    return list;
+	}
+	
+	
+	@GetMapping(value = "/fetchSubActivitiesByParent/{parentId}")
+	public List<ProjectActivities> fetchSubActivitiesByParent(@PathVariable Long parentId)
+	{
+		List<ProjectActivities> list=projectActivitiesService.fetchSubActivitiesByParent(parentId);
+	    return list;
 	}
 }

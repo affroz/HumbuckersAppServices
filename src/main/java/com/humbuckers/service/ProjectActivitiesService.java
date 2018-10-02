@@ -27,7 +27,18 @@ public class ProjectActivitiesService extends GenericService<ProjectActivities, 
 	public List<ProjectActivities> findByProjectId(Long projectid) {
 		return projectActivitiesRepository.findByProjectId(projectid);
 	}
+
+	public List<ProjectActivities> fetchMainActivitiesByProject(Long projectid) {
+		return projectActivitiesRepository.fetchMainActivitiesByProject(projectid);
+	}
 	
+	public List<ProjectActivities> fetchSubActivitiesByParent(Long projectid) {
+		return projectActivitiesRepository.fetchSubActivitiesByParent(projectid);
+	}
+
+	public boolean checkexist(Long activityKey, Long projectKey) {
+		return projectActivitiesRepository.checkexist(activityKey,projectKey) >0 ? true:false;
+	}
 	
 	
 	
