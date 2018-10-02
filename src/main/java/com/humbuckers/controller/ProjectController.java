@@ -61,10 +61,25 @@ public class ProjectController {
 	}
 	
 	
-	@RequestMapping(value = "/fetchProjectActivityByProject/{projectid}", method = RequestMethod.POST)
-	public List<ProjectActivities> fetchProjectActivity(@RequestBody Long projectid)
+	@GetMapping(value = "/fetchProjectActivityByProject/{projectid}")
+	public List<ProjectActivities> fetchProjectActivity(@PathVariable Long projectid)
 	{
 		List<ProjectActivities> list=projectActivitiesService.findByProjectId(projectid);
 	    return list;
+	}
+	
+	
+	@GetMapping(value = "/deleteProjectActivityByProject/{projectid}")
+	public String deleteProjectActivity(@PathVariable Long projectid)
+	{
+		List<ProjectActivities> list=projectActivitiesService.findByProjectId(projectid);
+		if(list!=null && list.size()>0) {
+			for (ProjectActivities projectActivities : list) {
+				projectActivitiesService.delete(projectActivities);
+
+			}
+		}
+		
+	    return "";
 	}
 }
