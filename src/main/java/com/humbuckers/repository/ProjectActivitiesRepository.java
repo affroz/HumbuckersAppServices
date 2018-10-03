@@ -50,8 +50,9 @@ public interface ProjectActivitiesRepository extends JpaRepository<ProjectActivi
 	public Date getActualEndDate(@Param("projectKey")Long projectKey,@Param("parentActvityKey") Long parentActvityKey);
 
 	
-	
-	
+	@Query(value = "select * from PROJECT_ACTIVITIES where PROJECT_KEY =:projectKey and PARENT_ACTIVTY_KEY =:parentKey",nativeQuery=true)
+	public List<ProjectActivities> fetchActivitiesByProjectAndParent(@Param("projectKey")Long projectKey,@Param("parentKey")Long parentKey);
+
 	
 	
 	

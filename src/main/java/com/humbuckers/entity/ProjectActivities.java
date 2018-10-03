@@ -56,6 +56,13 @@ public class ProjectActivities {
 	
 	@Column(name="ACTIVTY_TYPE_CODE")
 	private Long activityTypeCode;
+	
+	@Column(name="weightage")
+	private String weightage;
+	
+	@Column(name="NO_OF_DAYS")
+	private String noOfDays;
+	
 }
 
 

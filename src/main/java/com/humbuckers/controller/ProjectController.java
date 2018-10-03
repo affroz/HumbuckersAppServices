@@ -59,6 +59,23 @@ public class ProjectController {
 				}
 			}
 		}
+		
+		if(projectActivitiesList!=null && projectActivitiesList.size()>0) {
+			for (ProjectActivities projectActivities : projectActivitiesList) {
+				if(projectActivities.getActivityTypeCode()!=2) {
+					List<ProjectActivities> childlist=projectActivitiesService.fetchActivitiesByProjectAndParent(projectActivities.getProjectKey(),projectActivities.getActivityKey());
+				
+				     if(childlist!=null && childlist.size()>0) {
+				    	 for (ProjectActivities act : childlist) {
+				    		 Long weight=((Long.valueOf(act.getNoOfDays()))*100)/(Long.valueOf(projectActivities.getNoOfDays()));
+				    		 act.setWeightage(weight.toString());
+				    		 projectActivitiesService.save(act);
+						}
+				     }
+				
+				}
+			}
+		}
 		return "";
 		
 		

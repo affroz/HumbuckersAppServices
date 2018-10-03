@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.humbuckers.entity.ProjectActivities;
@@ -53,12 +54,18 @@ public class ProjectActivitiesService extends GenericService<ProjectActivities, 
 		act.setActivityPlannedEndDate(plannedEndDate);
 		act.setActivityAcutalStartDate(actualStartDate);
 		act.setActivityActualEndDate(actualEndDate);
+		if(act.getActivityPlannedStartDate()!=null && act.getActivityPlannedEndDate()!=null) {
+			Long days =((act.getActivityPlannedEndDate().getTime() - act.getActivityPlannedStartDate().getTime()) / (1000 * 60 * 60 * 24));
+			act.setNoOfDays(days.toString());
+		}
 		projectActivitiesRepository.save(act);
 		
 		
 	}
 	
-	
+	public List<ProjectActivities> fetchActivitiesByProjectAndParent(Long projectKey,Long parentKey) {
+		return projectActivitiesRepository.fetchActivitiesByProjectAndParent(projectKey,parentKey);
+	}
 	
 }
 
