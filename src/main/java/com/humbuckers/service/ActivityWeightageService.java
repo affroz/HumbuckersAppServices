@@ -10,6 +10,7 @@ import com.humbuckers.repository.ActivityWeightageRepository;
 @Service
 public class ActivityWeightageService extends GenericService<ActivityWeightage, Long>{
 	
+@SuppressWarnings("unused")
 private ActivityWeightageRepository repository;
 	
 	@Autowired

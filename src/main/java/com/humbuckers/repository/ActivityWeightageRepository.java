@@ -11,7 +11,7 @@ import com.humbuckers.entity.Users;
 
 
 /**
- * @author Affroz Khan
+ * @author Affroz Kha
  *
  * 
  */

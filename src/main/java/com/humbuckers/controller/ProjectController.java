@@ -61,7 +61,8 @@ public class ProjectController {
 		}
 		
 		if(projectActivitiesList!=null && projectActivitiesList.size()>0) {
-			for (ProjectActivities projectActivities : projectActivitiesList) {
+			List<ProjectActivities> list=projectActivitiesService.findByProjectId(projectActivitiesList.get(0).getProjectKey());
+			for (ProjectActivities projectActivities : list) {
 				if(projectActivities.getActivityTypeCode()!=2) {
 					List<ProjectActivities> childlist=projectActivitiesService.fetchActivitiesByProjectAndParent(projectActivities.getProjectKey(),projectActivities.getActivityKey());
 				

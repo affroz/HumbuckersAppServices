@@ -29,6 +29,8 @@ public class ActivityWeightage {
 	@Column(name="activity_id")
 	private Long activityId;
 	
+	
+	
 }
 
 
