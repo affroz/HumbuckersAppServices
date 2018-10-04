@@ -46,13 +46,7 @@ public class ActivityController {
 		Activities updateact=activityService.save(act);
 	    return updateact;
 	}
-	
-	@GetMapping(path = {"/generateActivityKey"})
-	public Long generateActivityKey(){
-		return activityService.generateActivityKey();
-	}
-	
-	
+
 	@GetMapping(path = {"/fetchAllActivityWeigth"})
 	public List<ActivityWeightage> fetchAllActivityWeightage(){
 		return activityWeightageService.findAll();

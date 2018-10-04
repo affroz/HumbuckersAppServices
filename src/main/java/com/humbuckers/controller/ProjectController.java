@@ -43,7 +43,7 @@ public class ProjectController {
 	
 	
 	@RequestMapping(value = "/saveProjectActivitiesList", method = RequestMethod.POST)
-	public String saveProjectActivities(@RequestBody List<ProjectActivities> projectActivitiesList)
+	public ProjectActivities saveProjectActivities(@RequestBody List<ProjectActivities> projectActivitiesList)
 	{
 		if(projectActivitiesList!=null && projectActivitiesList.size()>0) {
 			for (ProjectActivities projectActivities : projectActivitiesList) {
@@ -77,7 +77,7 @@ public class ProjectController {
 				}
 			}
 		}
-		return "";
+		return new ProjectActivities();
 		
 		
 	}
@@ -97,7 +97,7 @@ public class ProjectController {
 	
 	
 	@GetMapping(value = "/deleteProjectActivityByProject/{projectid}")
-	public String deleteProjectActivity(@PathVariable Long projectid)
+	public ProjectActivities deleteProjectActivity(@PathVariable Long projectid)
 	{
 		List<ProjectActivities> list=projectActivitiesService.findByProjectId(projectid);
 		if(list!=null && list.size()>0) {
@@ -107,7 +107,7 @@ public class ProjectController {
 			}
 		}
 		
-	    return "";
+	    return new ProjectActivities();
 	}
 	
 	

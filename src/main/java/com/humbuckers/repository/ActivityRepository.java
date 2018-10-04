@@ -34,8 +34,5 @@ public interface ActivityRepository extends JpaRepository<Activities, Long>, Jpa
 	@Query(value = "select * from ACTIVITIES where ACTIVITY_PARENT_ID =:key ",nativeQuery=true)
 	public List<Activities> findByParentKey(@Param("key")Long key);
 	
-	@Query(value = "select max(ACTIVITY_ID)+1 from ACTIVITIES",nativeQuery=true)
-	public Long generateActivityKey();
-	
-	
+		
 }
