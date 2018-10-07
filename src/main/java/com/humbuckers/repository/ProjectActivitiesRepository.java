@@ -20,7 +20,7 @@ import com.humbuckers.entity.Users;
  *
  * 
  */
-public interface ProjectActivitiesRepository extends JpaRepository<ProjectActivities, Long>, JpaSpecificationExecutor<Users> {
+public interface ProjectActivitiesRepository extends JpaRepository<ProjectActivities, Long> {
 
 	@Query(value = "select * from PROJECT_ACTIVITIES where PROJECT_KEY =:key ",nativeQuery=true)
 	public List<ProjectActivities> findByProjectId(@Param("key")Long key);

@@ -19,7 +19,7 @@ import com.humbuckers.entity.Users;
  *
  * 
  */
-public interface ActivityRepository extends JpaRepository<Activities, Long>, JpaSpecificationExecutor<Users> {
+public interface ActivityRepository extends JpaRepository<Activities, Long> {
 
 	
 

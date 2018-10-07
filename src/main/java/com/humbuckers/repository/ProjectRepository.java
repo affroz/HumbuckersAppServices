@@ -15,6 +15,6 @@ import com.humbuckers.entity.Users;
  *
  * 
  */
-public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpecificationExecutor<Users> {
+public interface ProjectRepository extends JpaRepository<Project, Long>{
 
 }

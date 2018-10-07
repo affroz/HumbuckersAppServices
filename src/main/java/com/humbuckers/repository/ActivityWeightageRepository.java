@@ -15,7 +15,7 @@ import com.humbuckers.entity.Users;
  *
  * 
  */
-public interface ActivityWeightageRepository extends JpaRepository<ActivityWeightage, Long>, JpaSpecificationExecutor<Users> {
+public interface ActivityWeightageRepository extends JpaRepository<ActivityWeightage, Long> {
 
 	
 
