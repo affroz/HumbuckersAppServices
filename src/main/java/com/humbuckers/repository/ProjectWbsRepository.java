@@ -23,7 +23,7 @@ public interface ProjectWbsRepository extends JpaRepository<ProjectWbs, Long> {
 	@Query(value = "select nextval('projects_wbs_activity_id_seq')",nativeQuery=true)
 	public Long fetchMaxWbsId();
 	
-	@Query(value = "select * from projects_wbs where PROJECT_KEY=:projectkey and activity_planned_start_date is not null ",nativeQuery=true)
+	@Query(value = "select * from projects_wbs where PROJECT_KEY=:projectkey and activity_code=1 ",nativeQuery=true)
 	public List<ProjectWbs> findActivites(@Param("projectkey") Long projectkey);
 	
 	@Query(value = "select MIN(activity_planned_start_date)  from  projects_wbs where PROJECT_KEY=:projectkey and parent_key=:parentKey",nativeQuery=true)
