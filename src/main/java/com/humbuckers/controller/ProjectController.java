@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.humbuckers.entity.Project;
 import com.humbuckers.entity.ProjectActivities;
+import com.humbuckers.entity.ProjectWbs;
 import com.humbuckers.service.ProjectActivitiesService;
 import com.humbuckers.service.ProjectService;
+import com.humbuckers.service.ProjectWbsService;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -27,6 +29,9 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectActivitiesService projectActivitiesService;
+	
+	@Autowired
+	private ProjectWbsService projectWbsService;
 	
 	@GetMapping(path = {"/fetchAllProjects"})
 	public List<Project> fetchAllProjects(){
@@ -124,5 +129,30 @@ public class ProjectController {
 	{
 		List<ProjectActivities> list=projectActivitiesService.fetchSubActivitiesByParent(parentId);
 	    return list;
+	}
+	
+	
+	@RequestMapping(value = "/saveProjectWbsList/{projectid}", method = RequestMethod.POST)
+	public ProjectWbs createProject(@RequestBody List<ProjectWbs> project,@PathVariable Long projectid)
+	{
+		if(project!=null && project.size()>0) {
+			for (ProjectWbs projectWbs : project) {
+				if(null!=projectWbs.getActivityPlannedEndDate() && null!=projectWbs.getActivityPlannedStartDate()) {
+					Long days=(projectWbs.getActivityPlannedEndDate().getTime() - projectWbs.getActivityPlannedStartDate().getTime()) / (1000 * 60 * 60 * 24);
+					projectWbs.setNoOfDays(days.toString());
+				}
+				projectWbsService.save(projectWbs);
+			}
+		}
+		
+		projectWbsService.updateDates(projectid);
+		
+	    return new ProjectWbs();
+	}
+	
+	@GetMapping(value = "/fetchMaxWbsId")
+	public Long fetchMaxWbsId() {
+		return projectWbsService.fetchMaxWbsId();
+		
 	}
 }
