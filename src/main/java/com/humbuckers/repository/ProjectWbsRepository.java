@@ -40,6 +40,15 @@ public interface ProjectWbsRepository extends JpaRepository<ProjectWbs, Long> {
 	@Query(value = "select MAX(activity_actual_end_date)  from  projects_wbs where PROJECT_KEY=:projectkey and parent_key=:parentKey",nativeQuery=true)
 	public Date findactualEndDate(@Param("parentKey") Long parentKey,@Param("projectkey") Long projectkey);
 
+	@Query(value = "select * from projects_wbs where parent_key=:parentId ",nativeQuery=true)
+	public List<ProjectWbs> fetchWbsByParent(@Param("parentId") Long parentId);
+	
+	
+	@Query(value = "select * from projects_wbs where PROJECT_KEY=:project and parent_key is null",nativeQuery=true)
+	public List<ProjectWbs> fetchWbsByParentByProject(@Param("project") Long project);
+
+	@Query(value = "select * from projects_wbs where PROJECT_KEY=:project",nativeQuery=true)
+	public List<ProjectWbs> findbyProjectKey(@Param("project") Long project);
 	
 	
 }

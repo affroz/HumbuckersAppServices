@@ -155,4 +155,32 @@ public class ProjectController {
 		return projectWbsService.fetchMaxWbsId();
 		
 	}
+	
+	
+	
+	@GetMapping(value = "/fetchWbsByParentByProject/{project}")
+	public List<ProjectWbs> fetchWbsByParentByProject(@PathVariable Long project)
+	{
+		List<ProjectWbs> list=projectWbsService.fetchWbsByParentByProject(project);
+	    return list;
+	}
+	
+	
+	
+	@GetMapping(value = "/fetchWbsByParent/{parentId}")
+	public List<ProjectWbs> fetchWbsByParent(@PathVariable Long parentId)
+	{
+		List<ProjectWbs> list=projectWbsService.fetchWbsByParent(parentId);
+	    return list;
+	}
+	
+	
+	@GetMapping(value = "/deleteWbsByProject/{projectid}")
+	public ProjectWbs deleteWbsByProject(@PathVariable Long projectid)
+	{
+		projectWbsService.deleteWbsByProject(projectid);
+	    return new ProjectWbs();
+	}
+	
+	
 }

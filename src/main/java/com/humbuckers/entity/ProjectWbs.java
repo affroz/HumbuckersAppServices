@@ -51,6 +51,10 @@ public class ProjectWbs {
 	
 	@Column(name="PROJECT_KEY")
 	private Long projectKey;
+	
+	
+	@Column(name="activity_code")
+	private Long activityCode;
 }
 
 

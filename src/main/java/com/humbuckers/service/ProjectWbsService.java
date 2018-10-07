@@ -59,16 +59,34 @@ private ProjectWbsRepository repository;
 
 	
 	public void updateWeightage(ProjectWbs child) {
-		ProjectWbs parent=findById(child.getParentKey());
-		float weightage= ((Float.valueOf(child.getNoOfDays())* 100.0f)/(Float.valueOf(parent.getNoOfDays())));
-		child.setWeightage(Float.toString(weightage));
-		save(child);
-		if(parent.getParentKey()!=null) {
-			updateWeightage(parent);
+		if(child.getParentKey()!=null) {
+			ProjectWbs parent=findById(child.getParentKey());
+			float weightage= ((Float.valueOf(child.getNoOfDays())* 100.0f)/(Float.valueOf(parent.getNoOfDays())));
+			child.setWeightage(Float.toString(weightage));
+			save(child);
+			if(parent.getParentKey()!=null) {
+				updateWeightage(parent);
+			}
 		}
 	}
+
+	public List<ProjectWbs> fetchWbsByParentByProject(Long project) {
+		return repository.fetchWbsByParentByProject(project);
+	}
 	
-	
+	public List<ProjectWbs> fetchWbsByParent(Long parentId) {
+		return repository.fetchWbsByParent(parentId);
+	}
+
+	public void deleteWbsByProject(Long projectid) {
+		List<ProjectWbs>list=repository.findbyProjectKey(projectid);
+		if(list!=null && list.size()>0) {
+			for (ProjectWbs projectWbs : list) {
+				repository.delete(projectWbs.getActivityId());
+			}
+		}
+		
+	}
 }
 
 
