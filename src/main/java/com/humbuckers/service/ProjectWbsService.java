@@ -87,6 +87,10 @@ private ProjectWbsRepository repository;
 		}
 		
 	}
+
+	public List<ProjectWbs> fetchAllWbsByProject(Long projectid) {
+		return repository.findbyProjectKey(projectid);
+	}
 }
 
 

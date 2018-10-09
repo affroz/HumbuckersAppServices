@@ -25,11 +25,9 @@ public class ActivityWeightage {
 	
 	@Column(name="weightage_percentage")
 	private String weightagePercentage;
-	
-	@Column(name="activity_id")
-	private Long activityId;
-	
-	
+		
+	@Column(name="projects_wbs_key")
+	private Long projectWbsKey;
 	
 }
 

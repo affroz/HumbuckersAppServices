@@ -1,7 +1,6 @@
 package com.humbuckers.service;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,34 +26,12 @@ private ActivityRepository repository;
 		Activities act=repository.findByActivityName(name);
 		return act;
 	}
-	
-	public List<Activities> findAllByType(){
-		List<Activities> list=new ArrayList<>();
-		List<Activities> allParent= repository.findAllByType("0");
-		for (Activities activities : allParent) {
-			List<Activities> actlist=fetchChildren(activities);
-			activities.setActivityChildList(actlist);
-			list.add(activities);
-		}
-		return list;
+
+	public List<Activities> findAllByType() {
+		return repository.findAllByType("1");
 	}
 	
 	
-	
-	public List<Activities> fetchChildren(Activities activities){
-			List<Activities> child=repository.findByParentKey(activities.getActivityId());
-			if(child!=null && child.size()>0) {
-				activities.setActivityChildList(child);
-				for (Activities childentity : child) {
-					if(!childentity.getActivityType().equals("2")) {
-						List<Activities> childlist=fetchChildren(childentity);
-						childentity.setActivityChildList(childlist);
-					}
-				}
-			}
-		
-		return child;
-	}
 	
 	
 }

@@ -34,10 +34,16 @@ public class ActivityController {
 		return activityService.findById(key);
 	}
 	
-	@GetMapping(path = {"/fetchAllActivity"})
-	public List<Activities> fetchAllActivity(){
+	@GetMapping(path = {"/fetchMainActivity"})
+	public List<Activities> fetchMainActivity(){
 		return activityService.findAllByType();
 	}
+	
+	@GetMapping(path = {"/fetchAllActivity"})
+	public List<Activities> fetchAllActivity(){
+		return activityService.findAll();
+	}
+	
 	
 	
 	@RequestMapping(value = "/updateActivity", method = RequestMethod.POST)

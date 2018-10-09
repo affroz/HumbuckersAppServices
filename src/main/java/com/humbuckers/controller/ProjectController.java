@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.humbuckers.entity.Project;
-import com.humbuckers.entity.ProjectActivities;
 import com.humbuckers.entity.ProjectWbs;
-import com.humbuckers.service.ProjectActivitiesService;
 import com.humbuckers.service.ProjectService;
 import com.humbuckers.service.ProjectWbsService;
 
@@ -26,9 +24,6 @@ public class ProjectController {
 
 	@Autowired
 	private ProjectService projectService; 
-	
-	@Autowired
-	private ProjectActivitiesService projectActivitiesService;
 	
 	@Autowired
 	private ProjectWbsService projectWbsService;
@@ -46,46 +41,7 @@ public class ProjectController {
 	    return updatedproject;
 	}
 	
-	
-	@RequestMapping(value = "/saveProjectActivitiesList", method = RequestMethod.POST)
-	public ProjectActivities saveProjectActivities(@RequestBody List<ProjectActivities> projectActivitiesList)
-	{
-		if(projectActivitiesList!=null && projectActivitiesList.size()>0) {
-			for (ProjectActivities projectActivities : projectActivitiesList) {
-				boolean exist=projectActivitiesService.checkexist(projectActivities.getActivityKey(),projectActivities.getProjectKey());
-				if(!exist)
-				projectActivitiesService.save(projectActivities);
-			}
-		}
-		if(projectActivitiesList!=null && projectActivitiesList.size()>0) {
-			for (ProjectActivities projectActivities : projectActivitiesList) {
-				if(projectActivities.getActivityTypeCode()!=2) {
-					projectActivitiesService.updateDates(projectActivities.getProjectKey(),projectActivities.getActivityKey());
-				}
-			}
-		}
 		
-		if(projectActivitiesList!=null && projectActivitiesList.size()>0) {
-			List<ProjectActivities> list=projectActivitiesService.findByProjectId(projectActivitiesList.get(0).getProjectKey());
-			for (ProjectActivities projectActivities : list) {
-				if(projectActivities.getActivityTypeCode()!=2) {
-					List<ProjectActivities> childlist=projectActivitiesService.fetchActivitiesByProjectAndParent(projectActivities.getProjectKey(),projectActivities.getActivityKey());
-				
-				     if(childlist!=null && childlist.size()>0) {
-				    	 for (ProjectActivities act : childlist) {
-				    		 Long weight=((Long.valueOf(act.getNoOfDays()))*100)/(Long.valueOf(projectActivities.getNoOfDays()));
-				    		 act.setWeightage(weight.toString());
-				    		 projectActivitiesService.save(act);
-						}
-				     }
-				
-				}
-			}
-		}
-		return new ProjectActivities();
-		
-		
-	}
 	
 	@GetMapping(path = {"/fetchProjectById/{key}"})
 	public Project fetchProjectById(@PathVariable("key") Long key){
@@ -93,43 +49,6 @@ public class ProjectController {
 	}
 	
 	
-	@GetMapping(value = "/fetchProjectActivityByProject/{projectid}")
-	public List<ProjectActivities> fetchProjectActivity(@PathVariable Long projectid)
-	{
-		List<ProjectActivities> list=projectActivitiesService.findByProjectId(projectid);
-	    return list;
-	}
-	
-	
-	@GetMapping(value = "/deleteProjectActivityByProject/{projectid}")
-	public ProjectActivities deleteProjectActivity(@PathVariable Long projectid)
-	{
-		List<ProjectActivities> list=projectActivitiesService.findByProjectId(projectid);
-		if(list!=null && list.size()>0) {
-			for (ProjectActivities projectActivities : list) {
-				projectActivitiesService.delete(projectActivities);
-
-			}
-		}
-		
-	    return new ProjectActivities();
-	}
-	
-	
-	@GetMapping(value = "/fetchMainActivitiesByProject/{projectid}")
-	public List<ProjectActivities> fetchMainActivitiesByProject(@PathVariable Long projectid)
-	{
-		List<ProjectActivities> list=projectActivitiesService.fetchMainActivitiesByProject(projectid);
-	    return list;
-	}
-	
-	
-	@GetMapping(value = "/fetchSubActivitiesByParent/{parentId}")
-	public List<ProjectActivities> fetchSubActivitiesByParent(@PathVariable Long parentId)
-	{
-		List<ProjectActivities> list=projectActivitiesService.fetchSubActivitiesByParent(parentId);
-	    return list;
-	}
 	
 	
 	@RequestMapping(value = "/saveProjectWbsList/{projectid}", method = RequestMethod.POST)
@@ -180,6 +99,13 @@ public class ProjectController {
 	{
 		projectWbsService.deleteWbsByProject(projectid);
 	    return new ProjectWbs();
+	}
+	
+	@GetMapping(value = "/fetchAllWbsByProject/{projectid}")
+	public List<ProjectWbs> fetchAllWbsByProject(@PathVariable Long parentId)
+	{
+		List<ProjectWbs> list=projectWbsService.fetchAllWbsByProject(parentId);
+	    return list;
 	}
 	
 	
