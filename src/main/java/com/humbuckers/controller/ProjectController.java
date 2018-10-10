@@ -64,7 +64,7 @@ public class ProjectController {
 			}
 		}
 		
-		projectWbsService.updateDates(projectid);
+		projectWbsService.updateOtherParameters(projectid);
 		
 	    return new ProjectWbs();
 	}
