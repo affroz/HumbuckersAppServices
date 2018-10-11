@@ -125,13 +125,6 @@ private ProjectWbsRepository repository;
 		return repository.findbyProjectKey(projectid);
 	}
 	
-	
-	public static void main(String[] args) throws Exception {
-		Date todaysDate=new Date();
-		if(todaysDate.before(todaysDate)) {
-			System.out.println("yes");
-		}
-	}
 }
 
 
