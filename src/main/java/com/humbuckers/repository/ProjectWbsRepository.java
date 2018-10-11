@@ -51,4 +51,8 @@ public interface ProjectWbsRepository extends JpaRepository<ProjectWbs, Long> {
 	public List<ProjectWbs> findbyProjectKey(@Param("project") Long project);
 	
 	
+	@Query(value = "select * from projects_wbs where main_parent_key=:mainparent  and activity_code=1 ",nativeQuery=true)
+	public List<ProjectWbs> findByMainParent(@Param("mainparent") Long mainparent);
+	
+	
 }

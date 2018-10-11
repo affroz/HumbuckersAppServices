@@ -5,10 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Service;
 
-import com.humbuckers.SpringBootWebApplication;
 import com.humbuckers.entity.ProjectWbs;
 import com.humbuckers.repository.ProjectWbsRepository;
 
@@ -47,6 +45,12 @@ private ProjectWbsRepository repository;
 			updatePlanAndActualPercent(projectWbs);
 		}
 		
+		List<ProjectWbs>mainList=repository.fetchWbsByParentByProject(projectid);
+		for (ProjectWbs projectWbs : mainList) {
+			projectWbs.setPlannedEarned(updatemainPlanPercentage(projectWbs.getActivityId()));
+			save(projectWbs);
+		}
+		
 	}
 	
 	
@@ -56,8 +60,7 @@ private ProjectWbsRepository repository;
 		parent.setActivityPlannedEndDate(repository.findplannedEndDate(child.getParentKey(),projectid));
 		parent.setActivityAcutalStartDate(repository.findactualStartDate(child.getParentKey(),projectid));
 		parent.setActivityActualEndDate(repository.findactualEndDate(child.getParentKey(),projectid));
-		Long days=(parent.getActivityPlannedEndDate().getTime() - parent.getActivityPlannedStartDate().getTime()) / (1000 * 60 * 60 * 24);
-		parent.setNoOfDays(days.toString());
+		parent.setNoOfDays(updateNumberofDays(parent.getActivityId()));
 		save(parent);
 			
 		if(parent.getParentKey()!=null) {
@@ -66,13 +69,29 @@ private ProjectWbsRepository repository;
 	}
 
 	
+	public String updateNumberofDays(Long id) {
+		String totalNodays=null;
+		List<ProjectWbs>activitiesList= repository.findByMainParent(id);
+		int i=0;
+		if(activitiesList!=null && activitiesList.size()>0) {
+			for (ProjectWbs entity : activitiesList) {
+				i = i+Integer.parseInt(entity.getNoOfDays());
+			}
+			
+			totalNodays=String.valueOf(i);
+		}
+		return totalNodays;
+	}
+	
 	public void updateWeightage(String totalnoofDays, ProjectWbs parent) {
 		
-		List<ProjectWbs>childlist=repository.fetchWbsByParent(parent.getActivityId());
+		List<ProjectWbs>childlist=repository.findByMainParent(parent.getActivityId());
 		if(childlist!=null && childlist.size()>0) {
 			for (ProjectWbs child : childlist) {
+				
 				float weightage= ((Float.valueOf(child.getNoOfDays())* 100.0f)/(Float.valueOf(totalnoofDays)));
 				child.setWeightage(Float.toString(weightage));
+				repository.save(child);
 				if(child.getActivityCode()==null) {
 					updateWeightage(totalnoofDays, child);
 				}
@@ -99,10 +118,26 @@ private ProjectWbsRepository repository;
 			float plannedearned= (Float.valueOf(entity.getWeightage())*plannedpercent)/100.0f;
 			entity.setPlannedEarned(Float.toString(plannedearned));
 			
-			repository.save(entity);
 		}
+		repository.save(entity);
 	}
 
+	
+	public String updatemainPlanPercentage(Long id) {
+		String plannedearned=null;
+		List<ProjectWbs>activitiesList= repository.findByMainParent(id);
+		float i=0.0f;
+		if(activitiesList!=null && activitiesList.size()>0) {
+			for (ProjectWbs entity : activitiesList) {
+				i = i+Float.parseFloat(entity.getPlannedEarned());
+			}
+			
+			plannedearned=String.valueOf(i);
+		}
+		return plannedearned;
+	}
+	
+	
 	public List<ProjectWbs> fetchWbsByParentByProject(Long project) {
 		return repository.fetchWbsByParentByProject(project);
 	}

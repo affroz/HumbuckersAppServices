@@ -77,8 +77,8 @@ public class ProjectWbs {
 	@Column(name="planned_percent")
 	private String plannedPercent;
 	
-
-
+	@Column(name="main_parent_key")
+	private Long mainParentKey;
 
 }
 
